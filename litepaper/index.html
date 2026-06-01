@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RuneFlow.xyz — AI Trading Sigils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sol-green: #00FFA3;
+    --sol-purple: #9945FF;
+    --jup-orange: #FF6B35;
+    --jup-yellow: #FFD700;
+    --void: #040B14;
+    --deep: #070F1C;
+    --panel: rgba(0,255,163,0.04);
+    --border: rgba(0,255,163,0.15);
+    --text: #E8F0E8;
+    --text-primary: #F0F8F0;
+    --text-heading: #FFFFFF;
+    --muted: rgba(200,220,210,0.55);
+    --bg-main: #141A14;
+    --bg-deep: #0E130E;
+    --bg-card: #1A221A;
+    --bg-panel: rgba(0,255,163,0.04);
+    --glow-green: 0 0 20px rgba(0,255,163,0.4), 0 0 60px rgba(0,255,163,0.15);
+    --glow-purple: 0 0 20px rgba(153,69,255,0.5), 0 0 60px rgba(153,69,255,0.2);
+    --glow-orange: 0 0 20px rgba(255,107,53,0.5), 0 0 60px rgba(255,107,53,0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRID BACKGROUND ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,163,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,163,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── AMBIENT ORBS ─── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: orbFloat 8s ease-in-out infinite alternate;
+  }
+  .orb-1 { width: 300px; height: 300px; background: rgba(123,47,232,0.12); top: -80px; right: -60px; animation-delay: 0s; }
+  .orb-2 { width: 250px; height: 250px; background: rgba(0,180,120,0.10); bottom: 20%; left: -80px; animation-delay: -3s; }
+  .orb-3 { width: 200px; height: 200px; background: rgba(232,90,32,0.08); bottom: -60px; right: 20%; animation-delay: -5s; }
+  @keyframes orbFloat { from { transform: translate(0,0) scale(1); } to { transform: translate(20px,-30px) scale(1.1); } }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    background: rgba(14,19,14,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--sol-green);
+    text-shadow: var(--glow-green);
+    letter-spacing: 1px;
+  }
+  .logo span { color: var(--sol-purple); }
+
+  .nav-actions {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .nav-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--jup-orange);
+    border: 1px solid var(--jup-orange);
+    padding: 3px 8px; border-radius: 2px;
+    letter-spacing: 1px;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-badge:hover { background: rgba(255,107,53,0.1); }
+
+  .nav-litepaper {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--sol-green);
+    border: 1px solid rgba(0,255,163,0.4);
+    padding: 3px 8px; border-radius: 2px;
+    letter-spacing: 1px;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-litepaper:hover { background: rgba(0,255,163,0.1); border-color: var(--sol-green); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px 24px 60px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    color: var(--sol-green);
+    margin-bottom: 20px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(28px, 8vw, 58px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero h1 .line1 { color: var(--text-heading); }
+  .hero h1 .line2 {
+    color: var(--sol-green);
+    text-shadow: var(--glow-green);
+  }
+
+  /* ─── SIGIL ─── */
+  .sigil-wrap {
+    margin: 32px auto;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .sigil-container {
+    position: relative;
+    width: 200px; height: 200px;
+    margin: 0 auto;
+  }
+  .sigil-ring {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,163,0.3);
+    animation: spinRing 12s linear infinite;
+  }
+  .sigil-ring:nth-child(2) { inset: 12px; border-color: rgba(153,69,255,0.4); animation-duration: 8s; animation-direction: reverse; }
+  .sigil-ring:nth-child(3) { inset: 24px; border-color: rgba(255,107,53,0.3); animation-duration: 15s; }
+  @keyframes spinRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .sigil-core {
+    position: absolute;
+    inset: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(153,69,255,0.3), rgba(0,255,163,0.1), transparent);
+    border: 1px solid rgba(0,255,163,0.5);
+    display: flex; align-items: center; justify-content: center;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 20px rgba(0,255,163,0.3), inset 0 0 20px rgba(153,69,255,0.2); }
+    50% { box-shadow: 0 0 40px rgba(0,255,163,0.6), inset 0 0 30px rgba(153,69,255,0.4); }
+  }
+  .sigil-glyph {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 22px;
+    color: var(--sol-green);
+    text-shadow: var(--glow-green);
+    letter-spacing: -2px;
+  }
+
+  .ring-dot {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--sol-green);
+    box-shadow: 0 0 8px var(--sol-green);
+    top: -3px; left: calc(50% - 3px);
+  }
+  .sigil-ring:nth-child(1) .ring-dot { background: var(--sol-green); box-shadow: 0 0 8px var(--sol-green); }
+  .sigil-ring:nth-child(2) .ring-dot { background: var(--sol-purple); box-shadow: 0 0 8px var(--sol-purple); }
+  .sigil-ring:nth-child(3) .ring-dot { background: var(--jup-orange); box-shadow: 0 0 8px var(--jup-orange); }
+
+  .hero-desc {
+    font-size: 16px; font-weight: 400;
+    color: var(--muted); line-height: 1.7;
+    max-width: 340px; margin: 0 auto 32px;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-cta {
+    display: flex; flex-direction: column;
+    gap: 12px; width: 100%; max-width: 300px; margin: 0 auto;
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .btn-primary {
+    display: block; width: 100%;
+    padding: 16px 28px;
+    background: linear-gradient(135deg, var(--sol-green), #00D48A);
+    color: #000000;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    border: none; border-radius: 4px; cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 30px rgba(0,255,163,0.35);
+    transition: all 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.4s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,255,163,0.55); }
+  .btn-primary:hover::before { left: 100%; }
+
+  .btn-secondary {
+    display: block; width: 100%;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--sol-green);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid rgba(0,255,163,0.4);
+    border-radius: 4px; cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--sol-green); background: rgba(0,255,163,0.06); }
+
+  .mint-price-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px; color: var(--jup-yellow);
+    margin-top: 8px; letter-spacing: 1px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,150,100,0.06);
+  }
+  .stat-item {
+    padding: 20px 16px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-value {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--sol-green);
+    text-shadow: var(--glow-green);
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block; margin-top: 4px;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative; z-index: 1;
+    padding: 60px 24px;
+  }
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    color: var(--sol-green); opacity: 0.7;
+    text-transform: uppercase; margin-bottom: 10px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(20px, 5vw, 30px);
+    font-weight: 700; color: var(--text-heading);
+    margin-bottom: 32px;
+    line-height: 1.2;
+  }
+  .section-title em { color: var(--sol-green); font-style: normal; }
+
+  /* ─── HOW IT WORKS ─── */
+  .steps { display: flex; flex-direction: column; gap: 16px; }
+  .step {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px;
+    background: rgba(0,255,163,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .step:hover { border-color: rgba(0,255,163,0.4); }
+  .step::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--sol-green), var(--sol-purple));
+  }
+  .step-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 28px; font-weight: 900;
+    color: rgba(0,255,163,0.2);
+    line-height: 1; flex-shrink: 0; width: 36px;
+  }
+  .step-content h3 {
+    font-size: 16px; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .step-content p {
+    font-size: 14px; color: var(--muted); line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ─── RARITY CARDS ─── */
+  .rarity-cards { display: flex; flex-direction: column; gap: 16px; }
+  .rarity-card {
+    padding: 24px 20px;
+    border-radius: 6px;
+    border: 1px solid;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .rarity-card:hover { transform: translateY(-3px); }
+
+  .rarity-card.rare {
+    background: linear-gradient(135deg, rgba(0,180,120,0.08), rgba(0,140,80,0.12));
+    border-color: rgba(0,255,163,0.3);
+  }
+  .rarity-card.rare:hover { box-shadow: 0 8px 40px rgba(0,255,163,0.2); }
+
+  .rarity-card.epic {
+    background: linear-gradient(135deg, rgba(123,47,232,0.10), rgba(80,0,200,0.08));
+    border-color: rgba(153,69,255,0.4);
+  }
+  .rarity-card.epic:hover { box-shadow: 0 8px 40px rgba(153,69,255,0.25); }
+
+  .rarity-card.legendary {
+    background: linear-gradient(135deg, rgba(184,146,10,0.10), rgba(232,90,32,0.08));
+    border-color: rgba(255,215,0,0.4);
+  }
+  .rarity-card.legendary:hover { box-shadow: 0 8px 40px rgba(255,215,0,0.2); }
+
+  .rarity-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 14px;
+  }
+  .rarity-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px; font-weight: 700;
+  }
+  .rarity-card.rare .rarity-name { color: var(--sol-green); }
+  .rarity-card.epic .rarity-name { color: var(--sol-purple); text-shadow: var(--glow-purple); }
+  .rarity-card.legendary .rarity-name { color: var(--jup-yellow); text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+
+  .rarity-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 1px;
+    padding: 3px 8px; border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .rare .rarity-badge { color: var(--sol-green); border: 1px solid rgba(0,255,163,0.3); }
+  .epic .rarity-badge { color: var(--sol-purple); border: 1px solid rgba(153,69,255,0.4); }
+  .legendary .rarity-badge { color: var(--jup-yellow); border: 1px solid rgba(255,215,0,0.4); }
+
+  .rarity-traits { list-style: none; }
+  .rarity-traits li {
+    font-size: 14px; color: var(--muted);
+    padding: 5px 0; display: flex; align-items: center; gap: 8px;
+    font-weight: 400;
+  }
+  .rarity-traits li::before {
+    content: '◆';
+    font-size: 8px; flex-shrink: 0;
+  }
+  .rare .rarity-traits li::before { color: var(--sol-green); }
+  .epic .rarity-traits li::before { color: var(--sol-purple); }
+  .legendary .rarity-traits li::before { color: var(--jup-yellow); }
+
+  .card-sigil {
+    position: absolute; right: 16px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 32px; opacity: 0.1;
+    pointer-events: none; letter-spacing: -2px;
+    color: var(--sol-green);
+  }
+
+  /* ─── ECONOMICS ─── */
+  .econ-section { background: rgba(0,150,100,0.04); }
+  .price-display {
+    text-align: center; padding: 30px 20px;
+    border: 1px solid var(--border); border-radius: 6px;
+    margin-bottom: 28px;
+    background: linear-gradient(135deg, rgba(0,150,100,0.08), rgba(123,47,232,0.08));
+  }
+  .price-amount {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 48px; font-weight: 900;
+    color: var(--sol-green);
+    text-shadow: var(--glow-green);
+    line-height: 1;
+  }
+  .price-unit {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px; color: var(--muted); margin-top: 6px;
+    letter-spacing: 2px;
+  }
+
+  .allocation-bars { display: flex; flex-direction: column; gap: 12px; }
+  .alloc-row {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .alloc-label {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary); min-width: 140px;
+    letter-spacing: 0.3px;
+  }
+  .alloc-track {
+    flex: 1; height: 6px; background: rgba(255,255,255,0.08);
+    border-radius: 3px; overflow: hidden;
+  }
+  .alloc-fill { height: 100%; border-radius: 3px; }
+  .alloc-pct {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px; color: var(--sol-green);
+    min-width: 36px; text-align: right;
+  }
+  .fill-treasury { background: linear-gradient(90deg, var(--sol-green), #00D48A); width: 60%; }
+  .fill-liquidity { background: linear-gradient(90deg, var(--sol-purple), #7B2FE8); width: 20%; }
+  .fill-dev { background: linear-gradient(90deg, var(--jup-orange), #E84F20); width: 10%; }
+  .fill-rewards { background: linear-gradient(90deg, var(--jup-yellow), #E8B800); width: 10%; }
+
+  /* ─── TECH STACK ─── */
+  .tech-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .tech-card {
+    padding: 16px;
+    background: rgba(0,255,163,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+  .tech-card:hover { border-color: rgba(0,255,163,0.35); }
+  .tech-card h4 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    color: var(--sol-green); margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .tech-list { list-style: none; }
+  .tech-list li {
+    font-size: 13px; color: var(--muted);
+    padding: 3px 0; font-weight: 400;
+  }
+  .tech-list li::before { content: '→ '; color: rgba(0,255,163,0.4); }
+
+  /* ─── ROADMAP ─── */
+  .roadmap { display: flex; flex-direction: column; gap: 0; }
+  .phase {
+    padding: 24px 20px;
+    border-left: 2px solid var(--border);
+    margin-left: 16px;
+    position: relative;
+  }
+  .phase::before {
+    content: '';
+    position: absolute; left: -7px; top: 28px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--sol-green);
+    background: var(--bg-main);
+    box-shadow: 0 0 12px rgba(0,255,163,0.5);
+  }
+  .phase.active::before { background: var(--sol-green); }
+  .phase.active { border-color: rgba(0,255,163,0.4); }
+
+  .phase-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    color: var(--sol-green); opacity: 0.7; margin-bottom: 6px;
+  }
+  .phase h3 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 15px; color: var(--text-heading); margin-bottom: 12px;
+  }
+  .phase-items { list-style: none; }
+  .phase-items li {
+    font-size: 14px; color: var(--muted);
+    padding: 4px 0; display: flex; gap: 8px; align-items: center;
+    font-weight: 400;
+  }
+  .phase-items li::before { content: '◇'; font-size: 8px; color: rgba(0,255,163,0.4); flex-shrink: 0; }
+  .phase.active .phase-items li::before { color: var(--sol-green); content: '◆'; }
+
+  /* ─── MINT CTA ─── */
+  .mint-section {
+    text-align: center;
+    padding: 70px 24px;
+    background: linear-gradient(180deg, transparent, rgba(123,47,232,0.07), transparent);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .mint-sigil-large {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 60px;
+    color: var(--sol-green);
+    text-shadow: var(--glow-green), 0 0 100px rgba(0,255,163,0.2);
+    margin-bottom: 24px;
+    display: block;
+    animation: sigilPulse 4s ease-in-out infinite;
+    letter-spacing: -4px;
+  }
+  @keyframes sigilPulse {
+    0%,100% { text-shadow: 0 0 20px rgba(0,255,163,0.4), 0 0 60px rgba(0,255,163,0.15); opacity: 1; }
+    50% { text-shadow: 0 0 40px rgba(0,255,163,0.8), 0 0 100px rgba(0,255,163,0.3); opacity: 0.9; }
+  }
+  .mint-section h2 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(22px, 6vw, 36px);
+    color: var(--text-heading); margin-bottom: 14px;
+  }
+  .mint-section p { font-size: 15px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+  .mint-btn-large {
+    display: inline-block; width: 100%; max-width: 320px;
+    padding: 20px 40px;
+    background: linear-gradient(135deg, var(--sol-green), #00C87A);
+    color: #000000;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase;
+    border: none; border-radius: 4px; cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 50px rgba(0,255,163,0.4), 0 20px 60px rgba(0,0,0,0.5);
+    transition: all 0.25s;
+  }
+  .mint-btn-large:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 80px rgba(0,255,163,0.6), 0 30px 80px rgba(0,0,0,0.6);
+  }
+  .solana-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 1px;
+  }
+  .sol-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sol-green); display: inline-block; }
+
+  /* ─── DISCLAIMER ─── */
+  .disclaimer {
+    padding: 24px;
+    background: rgba(232,90,32,0.06);
+    border-top: 1px solid rgba(255,107,53,0.15);
+  }
+  .disclaimer p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; line-height: 1.7;
+    color: rgba(200,220,210,0.4); letter-spacing: 0.3px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 24px; text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--bg-deep);
+  }
+  .footer-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 14px; color: var(--sol-green);
+    text-shadow: var(--glow-green);
+    margin-bottom: 8px;
+  }
+  .footer-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; color: var(--muted);
+  }
+
+  /* ─── RUNE CARD PREVIEW ─── */
+  .theme-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .theme-tab {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; letter-spacing: 1px;
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 3px; color: var(--muted);
+    cursor: pointer; transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .theme-tab:hover { border-color: var(--sol-green); color: var(--sol-green); }
+  .theme-tab.active { border-color: var(--sol-green); color: var(--sol-green); background: rgba(0,255,163,0.08); }
+
+  .card-stage {
+    display: flex; justify-content: center;
+    margin-bottom: 20px; perspective: 800px;
+  }
+  .rune-card {
+    width: 240px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    transform-style: preserve-3d;
+  }
+  .rune-card-inner {
+    border-radius: 12px;
+    border: 1px solid;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Theme: Void */
+  .rune-card.t-void .rune-card-inner {
+    background: linear-gradient(160deg, #1A1228, #0E0A1A);
+    border-color: rgba(153,69,255,0.5);
+    box-shadow: 0 4px 30px rgba(153,69,255,0.2), inset 0 0 30px rgba(153,69,255,0.06);
+  }
+  .rune-card.t-void .card-glyph { color: var(--sol-purple); text-shadow: var(--glow-purple); }
+  .rune-card.t-void .card-ring { border-color: rgba(153,69,255,0.4); }
+  .rune-card.t-void .card-rdot { background: var(--sol-purple); box-shadow: 0 0 8px var(--sol-purple); }
+  .rune-card.t-void .card-id { color: rgba(200,180,255,0.6); }
+  .rune-card.t-void .cs-val { color: #D0B8FF; }
+  .rune-card.t-void .cs-key { color: rgba(180,150,255,0.5); }
+  .rune-card.t-void .card-stats { border-top-color: rgba(153,69,255,0.2); }
+  .rune-card.t-void .card-footer { border-top-color: rgba(153,69,255,0.2); }
+  .rune-card.t-void .cf-label { color: rgba(180,150,255,0.5); }
+  .rune-card.t-void .cf-val { color: rgba(200,180,255,0.4); }
+  .rune-card.t-void .card-theme-label { color: rgba(200,180,255,0.4); }
+  .rune-card.t-void .card-sigil-center { background: rgba(153,69,255,0.1); border-color: rgba(153,69,255,0.3); }
+
+  /* Theme: Neon */
+  .rune-card.t-neon .rune-card-inner {
+    background: linear-gradient(160deg, #0A1A12, #061210);
+    border-color: rgba(0,200,120,0.5);
+    box-shadow: 0 4px 30px rgba(0,200,120,0.15), inset 0 0 30px rgba(0,200,120,0.05);
+  }
+  .rune-card.t-neon .card-glyph { color: var(--sol-green); text-shadow: var(--glow-green); }
+  .rune-card.t-neon .card-ring { border-color: rgba(0,255,163,0.4); }
+  .rune-card.t-neon .card-rdot { background: var(--sol-green); box-shadow: 0 0 8px var(--sol-green); }
+  .rune-card.t-neon .card-id { color: rgba(150,230,190,0.6); }
+  .rune-card.t-neon .cs-val { color: #80F0C0; }
+  .rune-card.t-neon .cs-key { color: rgba(100,200,150,0.5); }
+  .rune-card.t-neon .card-stats { border-top-color: rgba(0,255,163,0.15); }
+  .rune-card.t-neon .card-footer { border-top-color: rgba(0,255,163,0.15); }
+  .rune-card.t-neon .cf-label { color: rgba(100,200,150,0.5); }
+  .rune-card.t-neon .cf-val { color: rgba(150,230,190,0.4); }
+  .rune-card.t-neon .card-theme-label { color: rgba(150,230,190,0.4); }
+  .rune-card.t-neon .card-sigil-center { background: rgba(0,255,163,0.08); border-color: rgba(0,255,163,0.3); }
+
+  /* Theme: Gold */
+  .rune-card.t-gold .rune-card-inner {
+    background: linear-gradient(160deg, #1A1500, #120F00);
+    border-color: rgba(200,160,0,0.5);
+    box-shadow: 0 4px 30px rgba(200,160,0,0.15), inset 0 0 30px rgba(200,160,0,0.05);
+  }
+  .rune-card.t-gold .card-glyph { color: var(--jup-yellow); text-shadow: 0 0 20px rgba(255,215,0,0.6); }
+  .rune-card.t-gold .card-ring { border-color: rgba(255,215,0,0.35); }
+  .rune-card.t-gold .card-rdot { background: var(--jup-yellow); box-shadow: 0 0 8px var(--jup-yellow); }
+  .rune-card.t-gold .card-id { color: rgba(230,200,100,0.6); }
+  .rune-card.t-gold .cs-val { color: #F0D060; }
+  .rune-card.t-gold .cs-key { color: rgba(200,170,80,0.5); }
+  .rune-card.t-gold .card-stats { border-top-color: rgba(255,215,0,0.15); }
+  .rune-card.t-gold .card-footer { border-top-color: rgba(255,215,0,0.15); }
+  .rune-card.t-gold .cf-label { color: rgba(200,170,80,0.5); }
+  .rune-card.t-gold .cf-val { color: rgba(230,200,100,0.4); }
+  .rune-card.t-gold .card-theme-label { color: rgba(230,200,100,0.4); }
+  .rune-card.t-gold .card-sigil-center { background: rgba(255,215,0,0.08); border-color: rgba(255,215,0,0.3); }
+
+  /* Theme: Glitch */
+  .rune-card.t-glitch .rune-card-inner {
+    background: linear-gradient(160deg, #1A0A06, #120600);
+    border-color: rgba(232,90,32,0.5);
+    box-shadow: 0 4px 30px rgba(232,90,32,0.15), inset 0 0 30px rgba(232,90,32,0.05);
+  }
+  .rune-card.t-glitch .card-glyph { color: var(--jup-orange); text-shadow: var(--glow-orange); animation: glitchText 2s infinite; }
+  @keyframes glitchText {
+    0%,90%,100% { transform: none; clip-path: none; }
+    92% { transform: skewX(5deg); color: #ff00ff; }
+    94% { transform: skewX(-3deg); color: #00ffff; }
+    96% { transform: none; color: var(--jup-orange); }
+  }
+  .rune-card.t-glitch .card-ring { border-color: rgba(255,107,53,0.35); }
+  .rune-card.t-glitch .card-rdot { background: var(--jup-orange); box-shadow: 0 0 8px var(--jup-orange); }
+  .rune-card.t-glitch .card-id { color: rgba(230,160,120,0.6); }
+  .rune-card.t-glitch .cs-val { color: #F08050; }
+  .rune-card.t-glitch .cs-key { color: rgba(200,130,100,0.5); }
+  .rune-card.t-glitch .card-stats { border-top-color: rgba(255,107,53,0.15); }
+  .rune-card.t-glitch .card-footer { border-top-color: rgba(255,107,53,0.15); }
+  .rune-card.t-glitch .cf-label { color: rgba(200,130,100,0.5); }
+  .rune-card.t-glitch .cf-val { color: rgba(230,160,120,0.4); }
+  .rune-card.t-glitch .card-theme-label { color: rgba(230,160,120,0.4); }
+  .rune-card.t-glitch .card-sigil-center { background: rgba(255,107,53,0.08); border-color: rgba(255,107,53,0.3); }
+
+  /* Theme: Arcane */
+  .rune-card.t-arcane .rune-card-inner {
+    background: linear-gradient(160deg, #180A22, #10061A);
+    border-color: rgba(180,80,240,0.4);
+    box-shadow: 0 4px 30px rgba(180,80,240,0.15), inset 0 0 30px rgba(180,80,240,0.05);
+  }
+  .rune-card.t-arcane .card-glyph { color: #D080FF; text-shadow: 0 0 20px rgba(200,100,255,0.6); }
+  .rune-card.t-arcane .card-ring { border-color: rgba(200,100,255,0.3); }
+  .rune-card.t-arcane .card-rdot { background: #D080FF; box-shadow: 0 0 8px #D080FF; }
+  .rune-card.t-arcane .card-id { color: rgba(210,160,255,0.6); }
+  .rune-card.t-arcane .cs-val { color: #C080F0; }
+  .rune-card.t-arcane .cs-key { color: rgba(180,120,230,0.5); }
+  .rune-card.t-arcane .card-stats { border-top-color: rgba(200,100,255,0.15); }
+  .rune-card.t-arcane .card-footer { border-top-color: rgba(200,100,255,0.15); }
+  .rune-card.t-arcane .cf-label { color: rgba(180,120,230,0.5); }
+  .rune-card.t-arcane .cf-val { color: rgba(210,160,255,0.4); }
+  .rune-card.t-arcane .card-theme-label { color: rgba(210,160,255,0.4); }
+  .rune-card.t-arcane .card-sigil-center { background: rgba(200,100,255,0.08); border-color: rgba(200,100,255,0.3); }
+
+  /* Card internals */
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px 8px;
+  }
+  .card-id {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 1px;
+  }
+  .card-rarity-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 1.5px;
+    color: var(--jup-yellow);
+    border: 1px solid rgba(255,215,0,0.4);
+    padding: 2px 6px; border-radius: 2px;
+  }
+  .card-art {
+    position: relative; height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 14px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .card-rings { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .card-ring {
+    position: absolute; border-radius: 50%; border: 1px solid;
+  }
+  .r1 { width: 130px; height: 130px; animation: spinRing 10s linear infinite; }
+  .r2 { width: 100px; height: 100px; animation: spinRing 7s linear infinite reverse; }
+  .r3 { width: 70px; height: 70px; animation: spinRing 14s linear infinite; }
+  .card-rdot {
+    position: absolute; width: 5px; height: 5px;
+    border-radius: 50%; top: -2.5px; left: calc(50% - 2.5px);
+  }
+  .card-sigil-center {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .card-glyph {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px; letter-spacing: -2px;
+    transition: color 0.4s, text-shadow 0.4s;
+  }
+  .card-theme-label {
+    position: absolute; bottom: 8px; right: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; opacity: 0.5;
+  }
+  .card-stats {
+    display: flex; justify-content: space-around;
+    padding: 12px 14px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 8px;
+  }
+  .card-stat { text-align: center; }
+  .cs-val {
+    display: block;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px; font-weight: 700;
+  }
+  .cs-key {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px; letter-spacing: 1px; color: var(--muted);
+    margin-top: 2px;
+  }
+  .card-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px 14px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .cf-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px; letter-spacing: 1px; color: var(--muted);
+  }
+  .cf-val {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; color: rgba(200,220,210,0.3);
+  }
+
+  /* ─── MINT COUNTER BAR ─── */
+  .mint-counter-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px;
+    background: rgba(0,150,100,0.05);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .mc-left { flex: 1; margin-right: 20px; }
+  .mc-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; color: var(--muted);
+    display: block; margin-bottom: 8px;
+  }
+  .mc-track {
+    height: 4px; background: rgba(255,255,255,0.08);
+    border-radius: 2px; overflow: hidden; margin-bottom: 6px;
+  }
+  .mc-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sol-green), var(--sol-purple));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .mc-numbers {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; color: var(--sol-green);
+  }
+  .mc-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .mc-live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--sol-green);
+    box-shadow: 0 0 8px var(--sol-green);
+    animation: livePulse 1.5s ease-in-out infinite;
+  }
+  @keyframes livePulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .mc-live-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; color: var(--sol-green);
+  }
+
+  /* ─── DASHBOARD MOCK ─── */
+  .dashboard-mock {
+    background: #111811;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .dash-topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px;
+    background: rgba(0,150,100,0.07);
+    border-bottom: 1px solid var(--border);
+  }
+  .dash-wallet { display: flex; align-items: center; gap: 8px; }
+  .dash-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--sol-green); box-shadow: 0 0 8px var(--sol-green); }
+  .dash-addr { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--muted); }
+  .dash-status { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--sol-green); letter-spacing: 1px; }
+
+  .dash-rune-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dash-mini-sigil {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 16px; color: var(--sol-green);
+    text-shadow: var(--glow-green);
+    letter-spacing: -2px; flex-shrink: 0;
+    width: 44px; height: 44px;
+    border: 1px solid rgba(0,255,163,0.3);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,255,163,0.05);
+  }
+  .dash-rune-name { font-size: 15px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.5px; }
+  .dash-rune-tier { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--jup-yellow); letter-spacing: 1px; margin-top: 2px; }
+  .dash-uptime { margin-left: auto; text-align: right; }
+  .dash-up-val { display: block; font-family: 'Cinzel Decorative', serif; font-size: 16px; color: var(--sol-green); }
+  .dash-up-lbl { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1px; }
+
+  .dash-metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+  .dash-metric {
+    padding: 14px 10px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .dash-metric:last-child { border-right: none; }
+  .dm-val { display: block; font-family: 'Cinzel Decorative', serif; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+  .dm-val.green { color: var(--sol-green); }
+  .dm-key { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 1px; margin-top: 3px; display: block; }
+
+  .dash-chart-wrap { padding: 14px 16px 0; border-bottom: 1px solid var(--border); }
+  .dash-chart-label { font-family: 'Share Tech Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; }
+  .dash-chart { width: 100%; height: 60px; display: block; }
+
+  .dash-withdraw {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; border-bottom: 1px solid var(--border);
+  }
+  .dw-available { font-family: 'Cinzel Decorative', serif; font-size: 18px; font-weight: 700; color: var(--sol-green); }
+  .dw-currency { font-size: 12px; color: var(--muted); font-family: 'Share Tech Mono', monospace; }
+  .dw-label { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; margin-top: 2px; }
+  .dw-btn {
+    font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; padding: 10px 16px;
+    background: linear-gradient(135deg, var(--sol-green), #00C87A);
+    color: #000000; border: none; border-radius: 4px; cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .dw-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,255,163,0.3); }
+
+  .dash-activity { padding: 12px 16px 16px; }
+  .da-header { font-family: 'Share Tech Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
+  .da-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Share Tech Mono', monospace; font-size: 11px;
+  }
+  .da-row:last-child { border-bottom: none; }
+  .da-type {
+    padding: 2px 7px; border-radius: 2px; font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  }
+  .da-type.buy { background: rgba(0,255,163,0.15); color: var(--sol-green); }
+  .da-type.sell { background: rgba(153,69,255,0.15); color: var(--sol-purple); }
+  .da-pair { color: var(--text-primary); flex: 1; }
+  .da-result.green { color: var(--sol-green); }
+  .da-result.red { color: #FF6B6B; }
+  .da-time { color: var(--muted); font-size: 9px; }
+
+  /* ─── SECURITY ─── */
+  .security-grid { display: flex; flex-direction: column; gap: 14px; }
+  .sec-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 18px 16px;
+    background: rgba(0,255,163,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+  .sec-item:hover { border-color: rgba(0,255,163,0.35); }
+  .sec-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .sec-item h4 { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .sec-item p { font-size: 13px; color: var(--muted); line-height: 1.5; font-weight: 400; }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── TICKER ─── */
+  .ticker-wrap {
+    overflow: hidden; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+    padding: 10px 0;
+  }
+  .ticker {
+    display: flex; gap: 48px;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; letter-spacing: 1px; flex-shrink: 0;
+  }
+  .ticker-item.green { color: var(--sol-green); }
+  .ticker-item.purple { color: var(--sol-purple); }
+  .ticker-item.orange { color: var(--jup-orange); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── CONNECT WALLET MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,15,10,0.92);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #151C15;
+    border: 1px solid rgba(0,255,163,0.3);
+    border-radius: 8px;
+    padding: 32px 24px;
+    width: 100%; max-width: 360px;
+    text-align: center;
+    box-shadow: 0 0 80px rgba(0,255,163,0.12);
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.open .modal { transform: none; }
+  .modal h3 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 18px; color: var(--text-heading); margin-bottom: 8px;
+  }
+  .modal p { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .wallet-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .wallet-opt {
+    padding: 14px 20px;
+    background: rgba(0,255,163,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--text);
+    display: flex; align-items: center; gap: 12px;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .wallet-opt:hover { border-color: var(--sol-green); background: rgba(0,255,163,0.08); color: var(--sol-green); }
+  .wallet-icon { font-size: 20px; }
+  .modal-close {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; color: var(--muted); cursor: pointer;
+    background: none; border: none; letter-spacing: 1px;
+  }
+  .modal-close:hover { color: var(--text); }
+
+  /* ─── LITEPAPER MODAL ─── */
+  .litepaper-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(6,10,6,0.96);
+    backdrop-filter: blur(16px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s;
+    overflow-y: auto;
+  }
+  .litepaper-overlay.open { opacity: 1; pointer-events: all; }
+
+  .litepaper-modal {
+    background: #0E140E;
+    border: 1px solid rgba(0,255,163,0.25);
+    border-radius: 10px;
+    width: 100%; max-width: 640px;
+    margin: 20px 16px 40px;
+    box-shadow: 0 0 100px rgba(0,255,163,0.10), 0 40px 80px rgba(0,0,0,0.8);
+    transform: translateY(30px) scale(0.98);
+    transition: transform 0.35s;
+    overflow: hidden;
+  }
+  .litepaper-overlay.open .litepaper-modal { transform: none; }
+
+  .litepaper-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(0,255,163,0.15);
+    background: rgba(0,255,163,0.04);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(10px);
+  }
+  .litepaper-title-wrap { display: flex; align-items: center; gap: 10px; }
+  .litepaper-glyph {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px; color: var(--sol-green);
+    text-shadow: var(--glow-green); letter-spacing: -1px;
+  }
+  .litepaper-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--text-heading); letter-spacing: 0.5px;
+  }
+  .litepaper-version {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; color: var(--jup-yellow);
+    border: 1px solid rgba(255,215,0,0.3);
+    padding: 2px 6px; border-radius: 2px; letter-spacing: 1px;
+    margin-left: 8px;
+  }
+  .litepaper-close {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; color: var(--muted);
+    background: none; border: 1px solid var(--border);
+    border-radius: 3px; padding: 4px 10px;
+    cursor: pointer; letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .litepaper-close:hover { color: var(--text); border-color: rgba(0,255,163,0.4); }
+
+  .litepaper-pages {
+    padding: 24px 22px;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+
+  .litepaper-page {
+    position: relative;
+    border: 1px solid rgba(0,255,163,0.12);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #080E08;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .litepaper-page:hover {
+    border-color: rgba(0,255,163,0.25);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,255,163,0.06);
+  }
+
+  .litepaper-page-label {
+    position: absolute; top: 10px; left: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 2px;
+    color: var(--sol-green); opacity: 0.7;
+    z-index: 2;
+    background: rgba(0,0,0,0.5);
+    padding: 2px 6px; border-radius: 2px;
+  }
+
+  .litepaper-page img {
+    width: 100%;
+    display: block;
+    border-radius: 6px;
+    /* show the image; on error a fallback placeholder appears */
+  }
+
+  /* Fallback skeleton if image doesn't load */
+  .litepaper-page img[src=""] ,
+  .litepaper-page .img-placeholder {
+    display: none;
+  }
+  .litepaper-page .img-fallback {
+    width: 100%;
+    min-height: 280px;
+    background: linear-gradient(135deg, rgba(0,255,163,0.04), rgba(153,69,255,0.04));
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+    padding: 40px;
+  }
+  .img-fallback-glyph {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 32px; color: rgba(0,255,163,0.25);
+    letter-spacing: -3px;
+  }
+  .img-fallback-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; letter-spacing: 2px;
+    color: rgba(200,220,210,0.3);
+  }
+
+  .litepaper-footer {
+    padding: 18px 22px;
+    border-top: 1px solid rgba(0,255,163,0.12);
+    background: rgba(0,255,163,0.03);
+    text-align: center;
+  }
+  .litepaper-footer-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 1.5px;
+    color: var(--muted);
+  }
+  .litepaper-footer-text span { color: var(--sol-green); }
+</style>
+</head>
+<body>
+
+<!-- Ambient -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">Rune<span>Flow</span></div>
+  <div class="nav-actions">
+    <button class="nav-litepaper" onclick="openLitepaper()">LITEPAPER</button>
+    <button class="nav-badge" onclick="openModal()">CONNECT WALLET</button>
+  </div>
+</nav>
+
+<!-- Ticker -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item green">◆ SOL +2.4%</span>
+    <span class="ticker-item purple">◆ RUNE GENESIS MINT OPEN</span>
+    <span class="ticker-item orange">◆ MINT PRICE: $49 USDC</span>
+    <span class="ticker-item green">◆ LEGENDARY RUNES: EXTREMELY SCARCE</span>
+    <span class="ticker-item purple">◆ POWERED BY SOLANA</span>
+    <span class="ticker-item orange">◆ AI TRADING AGENTS LIVE</span>
+    <span class="ticker-item green">◆ SOL +2.4%</span>
+    <span class="ticker-item purple">◆ RUNE GENESIS MINT OPEN</span>
+    <span class="ticker-item orange">◆ MINT PRICE: $49 USDC</span>
+    <span class="ticker-item green">◆ LEGENDARY RUNES: EXTREMELY SCARCE</span>
+    <span class="ticker-item purple">◆ POWERED BY SOLANA</span>
+    <span class="ticker-item orange">◆ AI TRADING AGENTS LIVE</span>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">◆ SOLANA-NATIVE AI TRADING ◆ GENESIS COLLECTION</p>
+  <h1>
+    <span class="line1">Own the</span><br>
+    <span class="line2">Rune</span>
+  </h1>
+
+  <div class="sigil-wrap">
+    <div class="sigil-container">
+      <div class="sigil-ring"><div class="ring-dot"></div></div>
+      <div class="sigil-ring"><div class="ring-dot"></div></div>
+      <div class="sigil-ring"><div class="ring-dot"></div></div>
+      <div class="sigil-core">
+        <span class="sigil-glyph">&lt;^~^&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="hero-desc">Mint an AI-powered trading agent as a collectible NFT sigil. Each Rune is a unique autonomous engine deployed on Solana.</p>
+
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="openModal()">MINT YOUR RUNE</button>
+    <a href="#how-it-works" class="btn-secondary">HOW IT WORKS</a>
+    <p class="mint-price-tag">◆ $49 USDC · GENESIS PRICE</p>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-value">3</span>
+    <span class="stat-label">Rarity Tiers</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">$49</span>
+    <span class="stat-label">Mint Price</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-value">∞</span>
+    <span class="stat-label">Unique Sigils</span>
+  </div>
+</div>
+
+<!-- How It Works -->
+<section id="how-it-works">
+  <span class="section-tag">// PROTOCOL</span>
+  <h2 class="section-title">How it <em>Works</em></h2>
+  <div class="steps reveal">
+    <div class="step">
+      <span class="step-num">01</span>
+      <div class="step-content">
+        <h3>Connect Wallet</h3>
+        <p>Link your Solana wallet — Phantom, Solflare, or any Wallet Adapter compatible wallet.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <div class="step-content">
+        <h3>Pay USDC</h3>
+        <p>Mint your Rune for $49 USDC. Rarity is assigned through provably random on-chain generation.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <div class="step-content">
+        <h3>Receive NFT</h3>
+        <p>Your unique Rune sigil arrives in your wallet — Metaplex standard, tradeable and verifiable on-chain.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <div class="step-content">
+        <h3>Monitor & Withdraw</h3>
+        <p>Watch your agent perform from the dashboard. Eligible rewards withdraw directly to your Solana wallet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Rarity -->
+<section style="background: rgba(123,47,232,0.05);">
+  <span class="section-tag">// RARITY SYSTEM</span>
+  <h2 class="section-title">Choose your <em>Tier</em></h2>
+  <div class="rarity-cards reveal">
+    <div class="rarity-card rare">
+      <div class="rarity-header">
+        <span class="rarity-name">Rare</span>
+        <span class="rarity-badge">COMMON</span>
+      </div>
+      <ul class="rarity-traits">
+        <li>Standard trading profile</li>
+        <li>Base rewards structure</li>
+        <li>Core sigil artwork</li>
+      </ul>
+      <span class="card-sigil">&lt;^~^&gt;</span>
+    </div>
+    <div class="rarity-card epic">
+      <div class="rarity-header">
+        <span class="rarity-name">Epic</span>
+        <span class="rarity-badge">ENHANCED</span>
+      </div>
+      <ul class="rarity-traits">
+        <li>Enhanced strategy traits</li>
+        <li>Advanced visual effects</li>
+        <li>Increased rarity weight</li>
+      </ul>
+      <span class="card-sigil">&lt;^~^&gt;</span>
+    </div>
+    <div class="rarity-card legendary">
+      <div class="rarity-header">
+        <span class="rarity-name">Legendary</span>
+        <span class="rarity-badge">SCARCE</span>
+      </div>
+      <ul class="rarity-traits">
+        <li>Extremely scarce supply</li>
+        <li>Unique visual skin</li>
+        <li>Premium agent attributes</li>
+      </ul>
+      <span class="card-sigil">&lt;^~^&gt;</span>
+    </div>
+  </div>
+  <p style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);margin-top:20px;text-align:center;letter-spacing:1px;">VISUAL THEMES: VOID · NEON · CHROME · GOLD FOIL · RUNEFIRE · GLITCH · ARCANE</p>
+</section>
+
+<!-- Economics -->
+<section class="econ-section reveal">
+  <span class="section-tag">// MINT ECONOMICS</span>
+  <h2 class="section-title">Revenue <em>Allocation</em></h2>
+  <div class="price-display">
+    <div class="price-amount">$49</div>
+    <div class="price-unit">USDC · PER RUNE</div>
+  </div>
+  <div class="allocation-bars">
+    <div class="alloc-row">
+      <span class="alloc-label">Treasury</span>
+      <div class="alloc-track"><div class="alloc-fill fill-treasury"></div></div>
+      <span class="alloc-pct">60%</span>
+    </div>
+    <div class="alloc-row">
+      <span class="alloc-label">Liquidity Reserve</span>
+      <div class="alloc-track"><div class="alloc-fill fill-liquidity"></div></div>
+      <span class="alloc-pct">20%</span>
+    </div>
+    <div class="alloc-row">
+      <span class="alloc-label">Development</span>
+      <div class="alloc-track"><div class="alloc-fill fill-dev"></div></div>
+      <span class="alloc-pct">10%</span>
+    </div>
+    <div class="alloc-row">
+      <span class="alloc-label">Rewards Pool</span>
+      <div class="alloc-track"><div class="alloc-fill fill-rewards"></div></div>
+      <span class="alloc-pct">10%</span>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Stack -->
+<section>
+  <span class="section-tag">// INFRASTRUCTURE</span>
+  <h2 class="section-title">Built on <em>Solana</em></h2>
+  <div class="tech-grid reveal">
+    <div class="tech-card">
+      <h4>Frontend</h4>
+      <ul class="tech-list">
+        <li>Next.js</li>
+        <li>TypeScript</li>
+        <li>Tailwind CSS</li>
+        <li>Wallet Adapter</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <h4>Blockchain</h4>
+      <ul class="tech-list">
+        <li>Solana</li>
+        <li>Anchor</li>
+        <li>Metaplex</li>
+        <li>Helius RPC</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <h4>Backend</h4>
+      <ul class="tech-list">
+        <li>Node.js</li>
+        <li>PostgreSQL</li>
+        <li>Redis</li>
+        <li>FastAPI</li>
+      </ul>
+    </div>
+    <div class="tech-card">
+      <h4>Storage</h4>
+      <ul class="tech-list">
+        <li>Arweave</li>
+        <li>IPFS</li>
+        <li>Vercel</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section style="background:rgba(0,255,163,0.02);">
+  <span class="section-tag">// ROADMAP</span>
+  <h2 class="section-title">The <em>Path</em></h2>
+  <div class="roadmap reveal">
+    <div class="phase active">
+      <p class="phase-tag">PHASE 01 · LIVE</p>
+      <h3>Genesis Mint</h3>
+      <ul class="phase-items">
+        <li>Wallet Integration</li>
+        <li>NFT Minting</li>
+        <li>Dashboard</li>
+        <li>Withdrawals</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <p class="phase-tag">PHASE 02</p>
+      <h3>Agent Expansion</h3>
+      <ul class="phase-items">
+        <li>Enhanced Strategies</li>
+        <li>Marketplace</li>
+        <li>Leaderboards</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <p class="phase-tag">PHASE 03</p>
+      <h3>Rune Network</h3>
+      <ul class="phase-items">
+        <li>Agent Collaboration</li>
+        <li>Seasonal Collections</li>
+        <li>Advanced AI Infrastructure</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Rune Card Preview -->
+<section id="preview" style="background:rgba(153,69,255,0.04); padding:60px 24px;">
+  <span class="section-tag">// NFT IDENTITY</span>
+  <h2 class="section-title">Your <em>Sigil Card</em></h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6;">Every minted Rune generates a unique visual identity. Tap a theme to preview your card.</p>
+
+  <div class="theme-tabs">
+    <button class="theme-tab active" data-theme="void">Void</button>
+    <button class="theme-tab" data-theme="neon">Neon</button>
+    <button class="theme-tab" data-theme="gold">Gold Foil</button>
+    <button class="theme-tab" data-theme="glitch">Glitch</button>
+    <button class="theme-tab" data-theme="arcane">Arcane</button>
+  </div>
+
+  <div class="card-stage">
+    <div class="rune-card" id="runeCard">
+      <div class="rune-card-inner">
+        <div class="card-header">
+          <span class="card-id" id="cardId">RUNE #0847</span>
+          <span class="card-rarity-label" id="cardRarity">LEGENDARY</span>
+        </div>
+        <div class="card-art" id="cardArt">
+          <div class="card-rings">
+            <div class="card-ring r1"><div class="card-rdot"></div></div>
+            <div class="card-ring r2"><div class="card-rdot"></div></div>
+            <div class="card-ring r3"><div class="card-rdot"></div></div>
+          </div>
+          <div class="card-sigil-center">
+            <span class="card-glyph">&lt;^~^&gt;</span>
+            <div class="card-particles" id="cardParticles"></div>
+          </div>
+          <div class="card-theme-label" id="themeLabel">VOID</div>
+        </div>
+        <div class="card-stats">
+          <div class="card-stat">
+            <span class="cs-val" id="statSpeed">97</span>
+            <span class="cs-key">SPEED</span>
+          </div>
+          <div class="card-stat">
+            <span class="cs-val" id="statPower">84</span>
+            <span class="cs-key">POWER</span>
+          </div>
+          <div class="card-stat">
+            <span class="cs-val" id="statLuck">63</span>
+            <span class="cs-key">LUCK</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="cf-label">ENGINE SEED</span>
+          <span class="cf-val" id="engineSeed">0xA4F7...3B2E</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:8px;">
+    <button class="btn-secondary" style="max-width:240px;margin:0 auto;display:block;" onclick="randomizeCard()">↻ RANDOMIZE RUNE</button>
+  </div>
+</section>
+
+<!-- Live Mint Counter -->
+<section style="padding:0;">
+  <div class="mint-counter-bar">
+    <div class="mc-left">
+      <span class="mc-label">GENESIS MINTED</span>
+      <div class="mc-track">
+        <div class="mc-fill" id="mintFill"></div>
+      </div>
+      <span class="mc-numbers"><span id="mintedCount">847</span> / 3,000</span>
+    </div>
+    <div class="mc-right">
+      <div class="mc-live-dot"></div>
+      <span class="mc-live-text">LIVE</span>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Preview -->
+<section id="dashboard" style="padding:60px 24px;">
+  <span class="section-tag">// AGENT DASHBOARD</span>
+  <h2 class="section-title">Monitor Your <em>Agent</em></h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6;">Track real-time performance, manage withdrawals, and oversee your Rune's activity — all from a single dashboard.</p>
+
+  <div class="dashboard-mock">
+    <div class="dash-topbar">
+      <div class="dash-wallet">
+        <span class="dash-dot"></span>
+        <span class="dash-addr">7xK4...mR9W</span>
+      </div>
+      <span class="dash-status">● ACTIVE</span>
+    </div>
+
+    <div class="dash-rune-row">
+      <div class="dash-mini-sigil">&lt;^~^&gt;</div>
+      <div>
+        <div class="dash-rune-name">RUNE #0847</div>
+        <div class="dash-rune-tier">LEGENDARY · VOID SKIN</div>
+      </div>
+      <div class="dash-uptime">
+        <span class="dash-up-val">99.2%</span>
+        <span class="dash-up-lbl">UPTIME</span>
+      </div>
+    </div>
+
+    <div class="dash-metrics">
+      <div class="dash-metric">
+        <span class="dm-val green">+$124.50</span>
+        <span class="dm-key">Rewards</span>
+      </div>
+      <div class="dash-metric">
+        <span class="dm-val">1,284</span>
+        <span class="dm-key">Trades</span>
+      </div>
+      <div class="dash-metric">
+        <span class="dm-val green">68.4%</span>
+        <span class="dm-key">Win Rate</span>
+      </div>
+      <div class="dash-metric">
+        <span class="dm-val">14d</span>
+        <span class="dm-key">Active</span>
+      </div>
+    </div>
+
+    <div class="dash-chart-wrap">
+      <div class="dash-chart-label">PERFORMANCE · 14D</div>
+      <svg class="dash-chart" viewBox="0 0 300 80" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00FFA3" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#00FFA3" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,60 L20,55 L40,58 L60,48 L80,50 L100,42 L120,38 L140,32 L160,28 L180,22 L200,18 L220,14 L240,10 L260,8 L280,6 L300,4 L300,80 L0,80Z" fill="url(#chartGrad)"/>
+        <path d="M0,60 L20,55 L40,58 L60,48 L80,50 L100,42 L120,38 L140,32 L160,28 L180,22 L200,18 L220,14 L240,10 L260,8 L280,6 L300,4" fill="none" stroke="#00FFA3" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="dash-withdraw">
+      <div>
+        <div class="dw-available">$124.50 <span class="dw-currency">USDC</span></div>
+        <div class="dw-label">Available to withdraw</div>
+      </div>
+      <button class="dw-btn">WITHDRAW →</button>
+    </div>
+
+    <div class="dash-activity">
+      <div class="da-header">RECENT ACTIVITY</div>
+      <div class="da-row">
+        <span class="da-type buy">BUY</span>
+        <span class="da-pair">SOL/USDC</span>
+        <span class="da-result green">+$3.42</span>
+        <span class="da-time">2m ago</span>
+      </div>
+      <div class="da-row">
+        <span class="da-type sell">SELL</span>
+        <span class="da-pair">JUP/USDC</span>
+        <span class="da-result green">+$1.18</span>
+        <span class="da-time">7m ago</span>
+      </div>
+      <div class="da-row">
+        <span class="da-type buy">BUY</span>
+        <span class="da-pair">RAY/USDC</span>
+        <span class="da-result red">-$0.54</span>
+        <span class="da-time">15m ago</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Security Section -->
+<section style="background:rgba(153,69,255,0.03);padding:60px 24px;">
+  <span class="section-tag">// SECURITY</span>
+  <h2 class="section-title">Built to be <em>Trusted</em></h2>
+  <div class="security-grid reveal">
+    <div class="sec-item">
+      <div class="sec-icon">🔐</div>
+      <div>
+        <h4>Wallet Signature Auth</h4>
+        <p>All actions require your wallet signature. No passwords, no custody.</p>
+      </div>
+    </div>
+    <div class="sec-item">
+      <div class="sec-icon">🏛️</div>
+      <div>
+        <h4>Multi-Sig Treasury</h4>
+        <p>Treasury controlled by multi-signature scheme — no single point of failure.</p>
+      </div>
+    </div>
+    <div class="sec-item">
+      <div class="sec-icon">📋</div>
+      <div>
+        <h4>Smart Contract Audit</h4>
+        <p>On-chain programs reviewed and audited before mainnet deployment.</p>
+      </div>
+    </div>
+    <div class="sec-item">
+      <div class="sec-icon">⚡</div>
+      <div>
+        <h4>Rate Limiting</h4>
+        <p>Infrastructure protected with rate limiting and continuous monitoring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mint CTA -->
+<section class="mint-section">
+  <span class="mint-sigil-large">&lt;^~^&gt;</span>
+  <h2>Your Rune Awaits</h2>
+  <p>Join the genesis collection. Own a piece of the autonomous trading network.</p>
+  <button class="mint-btn-large" onclick="openModal()">MINT FOR $49 USDC</button>
+  <div>
+    <span class="solana-badge">
+      <span class="sol-dot"></span>
+      POWERED BY SOLANA · SECURED ON-CHAIN
+      <span class="sol-dot"></span>
+    </span>
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <p>⚠ DISCLAIMER: RuneFlow is an experimental digital asset platform. NFT ownership does not guarantee profits, returns, or future value. Users should understand the risks associated with blockchain networks, digital assets, and automated systems before participating. This is not financial advice.</p>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">RuneFlow.xyz</div>
+  <div class="footer-sub">◆ LITE PAPER v0.1 · GENESIS COLLECTION ◆</div>
+</footer>
+
+<!-- ─── LITEPAPER MODAL ─── -->
+<div class="litepaper-overlay" id="litepaperModal" onclick="closeLitepaperOutside(event)">
+  <div class="litepaper-modal">
+    <div class="litepaper-header">
+      <div class="litepaper-title-wrap">
+        <span class="litepaper-glyph">&lt;^~^&gt;</span>
+        <span class="litepaper-title">RuneFlow Litepaper</span>
+        <span class="litepaper-version">v0.1</span>
+      </div>
+      <button class="litepaper-close" onclick="closeLitepaper()">✕ CLOSE</button>
+    </div>
+
+    <div class="litepaper-pages">
+
+      <div class="litepaper-page">
+        <span class="litepaper-page-label">PAGE 01</span>
+        <img
+          src="litepaper/1.png"
+          alt="RuneFlow Litepaper — Page 1"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        />
+        <div class="img-fallback" style="display:none;">
+          <span class="img-fallback-glyph">&lt;^~^&gt;</span>
+          <span class="img-fallback-text">litepaper/1.png</span>
+        </div>
+      </div>
+
+      <div class="litepaper-page">
+        <span class="litepaper-page-label">PAGE 02</span>
+        <img
+          src="litepaper/2.png"
+          alt="RuneFlow Litepaper — Page 2"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        />
+        <div class="img-fallback" style="display:none;">
+          <span class="img-fallback-glyph">&lt;^~^&gt;</span>
+          <span class="img-fallback-text">litepaper/2.png</span>
+        </div>
+      </div>
+
+      <div class="litepaper-page">
+        <span class="litepaper-page-label">PAGE 03</span>
+        <img
+          src="litepaper/3.png"
+          alt="RuneFlow Litepaper — Page 3"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        />
+        <div class="img-fallback" style="display:none;">
+          <span class="img-fallback-glyph">&lt;^~^&gt;</span>
+          <span class="img-fallback-text">litepaper/3.png</span>
+        </div>
+      </div>
+
+      <div class="litepaper-page">
+        <span class="litepaper-page-label">PAGE 04</span>
+        <img
+          src="litepaper/4.png"
+          alt="RuneFlow Litepaper — Page 4"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        />
+        <div class="img-fallback" style="display:none;">
+          <span class="img-fallback-glyph">&lt;^~^&gt;</span>
+          <span class="img-fallback-text">litepaper/4.png</span>
+        </div>
+      </div>
+
+      <div class="litepaper-page">
+        <span class="litepaper-page-label">PAGE 05</span>
+        <img
+          src="litepaper/5.png"
+          alt="RuneFlow Litepaper — Page 5"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        />
+        <div class="img-fallback" style="display:none;">
+          <span class="img-fallback-glyph">&lt;^~^&gt;</span>
+          <span class="img-fallback-text">litepaper/5.png</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="litepaper-footer">
+      <span class="litepaper-footer-text">
+        <span>RuneFlow.xyz</span> · GENESIS COLLECTION · LITE PAPER v0.1
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Connect Wallet Modal -->
+<div class="modal-overlay" id="walletModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <h3>Connect Wallet</h3>
+    <p>Select your Solana wallet to mint a Rune</p>
+    <div class="wallet-options">
+      <button class="wallet-opt" onclick="selectWallet('Phantom')">
+        <span class="wallet-icon">👻</span> Phantom
+      </button>
+      <button class="wallet-opt" onclick="selectWallet('Solflare')">
+        <span class="wallet-icon">🔥</span> Solflare
+      </button>
+      <button class="wallet-opt" onclick="selectWallet('Backpack')">
+        <span class="wallet-icon">🎒</span> Backpack
+      </button>
+    </div>
+    <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
+  </div>
+</div>
+
+<script>
+  /* ── Litepaper Modal ── */
+  function openLitepaper() {
+    document.getElementById('litepaperModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLitepaper() {
+    document.getElementById('litepaperModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeLitepaperOutside(e) {
+    if (e.target === document.getElementById('litepaperModal')) closeLitepaper();
+  }
+
+  /* ── Wallet Modal ── */
+  function openModal() {
+    document.getElementById('walletModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('walletModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('walletModal')) closeModal();
+  }
+  function selectWallet(name) {
+    closeModal();
+    const badge = document.querySelector('.nav-badge');
+    badge.textContent = '◆ ' + name.toUpperCase() + ' CONNECTED';
+    badge.style.color = 'var(--sol-green)';
+    badge.style.borderColor = 'var(--sol-green)';
+    badge.style.background = 'rgba(0,255,163,0.08)';
+    document.querySelector('.mint-btn-large').textContent = 'MINT NOW — $49 USDC';
+  }
+
+  /* ── Scroll Reveal ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  /* ── Card Theme Switcher ── */
+  const themes = {
+    void:   { cls: 't-void',   label: 'VOID',      rarity: 'LEGENDARY', color: '#9945FF' },
+    neon:   { cls: 't-neon',   label: 'NEON',      rarity: 'EPIC',      color: '#00FFA3' },
+    gold:   { cls: 't-gold',   label: 'GOLD FOIL', rarity: 'LEGENDARY', color: '#FFD700' },
+    glitch: { cls: 't-glitch', label: 'GLITCH',    rarity: 'EPIC',      color: '#FF6B35' },
+    arcane: { cls: 't-arcane', label: 'ARCANE',    rarity: 'LEGENDARY', color: '#D080FF' },
+  };
+
+  let currentTheme = 'void';
+  const card = document.getElementById('runeCard');
+
+  function setTheme(key) {
+    const t = themes[key];
+    Object.values(themes).forEach(v => card.classList.remove(v.cls));
+    card.classList.add(t.cls);
+    document.getElementById('themeLabel').textContent = t.label;
+    document.getElementById('cardRarity').textContent = t.rarity;
+    document.getElementById('cardRarity').style.color = t.color;
+    document.getElementById('cardRarity').style.borderColor = t.color + '66';
+    currentTheme = key;
+    document.querySelectorAll('.theme-tab').forEach(tb => {
+      tb.classList.toggle('active', tb.dataset.theme === key);
+    });
+  }
+
+  document.querySelectorAll('.theme-tab').forEach(tab => {
+    tab.addEventListener('click', () => setTheme(tab.dataset.theme));
+  });
+
+  setTheme('void');
+
+  /* ── Card 3D tilt ── */
+  const stage = document.querySelector('.card-stage');
+  stage.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    const dx = (e.clientX - cx) / (r.width / 2);
+    const dy = (e.clientY - cy) / (r.height / 2);
+    card.style.transform = `rotateY(${dx * 10}deg) rotateX(${-dy * 8}deg)`;
+  });
+  stage.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform 0.5s ease';
+    setTimeout(() => card.style.transition = '', 500);
+  });
+
+  /* ── Randomize Card ── */
+  const themeKeys = Object.keys(themes);
+  const seeds = () => '0x' + Math.random().toString(16).slice(2,6).toUpperCase() + '...' + Math.random().toString(16).slice(2,6).toUpperCase();
+
+  function randomizeCard() {
+    const key = themeKeys[Math.floor(Math.random() * themeKeys.length)];
+    setTheme(key);
+    const id = Math.floor(Math.random() * 3000) + 1;
+    document.getElementById('cardId').textContent = 'RUNE #' + String(id).padStart(4,'0');
+    document.getElementById('engineSeed').textContent = seeds();
+    document.getElementById('statSpeed').textContent = Math.floor(Math.random() * 40 + 60);
+    document.getElementById('statPower').textContent = Math.floor(Math.random() * 40 + 55);
+    document.getElementById('statLuck').textContent = Math.floor(Math.random() * 50 + 40);
+    card.style.transition = 'transform 0.15s';
+    card.style.transform = 'scale(1.04)';
+    setTimeout(() => { card.style.transform = ''; }, 150);
+  }
+
+  /* ── Mint Counter Animation ── */
+  let minted = 847;
+  const maxMint = 3000;
+
+  function animateMintBar() {
+    const pct = (minted / maxMint * 100).toFixed(1);
+    document.getElementById('mintFill').style.width = pct + '%';
+    document.getElementById('mintedCount').textContent = minted.toLocaleString();
+  }
+
+  const counterObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      animateMintBar();
+      counterObs.disconnect();
+    }
+  }, { threshold: 0.5 });
+  const counterEl = document.querySelector('.mint-counter-bar');
+  if (counterEl) counterObs.observe(counterEl);
+
+  setInterval(() => {
+    if (minted < maxMint && Math.random() > 0.6) {
+      minted += Math.floor(Math.random() * 3) + 1;
+      animateMintBar();
+    }
+  }, 3000);
+
+  /* ── Activity Feed Live Updates ── */
+  const pairs = ['SOL/USDC','JUP/USDC','RAY/USDC','BONK/USDC','WIF/USDC','PYTH/USDC'];
+  const types = ['BUY','SELL'];
+
+  function addActivity() {
+    const feed = document.querySelector('.dash-activity');
+    if (!feed) return;
+    const rows = feed.querySelectorAll('.da-row');
+    const pair = pairs[Math.floor(Math.random() * pairs.length)];
+    const type = types[Math.floor(Math.random() * 2)];
+    const isWin = Math.random() > 0.35;
+    const amt = (Math.random() * 5 + 0.3).toFixed(2);
+    const newRow = document.createElement('div');
+    newRow.className = 'da-row';
+    newRow.style.opacity = '0';
+    newRow.innerHTML = `
+      <span class="da-type ${type.toLowerCase()}">${type}</span>
+      <span class="da-pair">${pair}</span>
+      <span class="da-result ${isWin ? 'green' : 'red'}">${isWin ? '+' : '-'}$${amt}</span>
+      <span class="da-time">now</span>`;
+    feed.insertBefore(newRow, rows[0]);
+    setTimeout(() => newRow.style.opacity = '1', 10);
+    newRow.style.transition = 'opacity 0.4s';
+    feed.querySelectorAll('.da-row').forEach((r, i) => {
+      const times = ['now','1m ago','3m ago','7m ago'];
+      const t = r.querySelector('.da-time');
+      if (t && times[i]) t.textContent = times[i];
+    });
+    const allRows = feed.querySelectorAll('.da-row');
+    if (allRows.length > 3) allRows[allRows.length - 1].remove();
+  }
+  setInterval(addActivity, 5000);
+
+  /* ── ESC key to close modals ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeLitepaper();
+      closeModal();
+    }
+  });
+</script>
+</body>
+</html>
